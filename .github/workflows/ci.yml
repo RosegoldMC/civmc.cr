@@ -1,0 +1,17 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  specs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update
+      - uses: oprypin/install-crystal@v1
+        with:
+          crystal: 1.19.1
+      - run: shards install
+      - run: crystal tool format --check
+      - run: crystal spec
+      - run: python3 spec/compile_boundary.py
