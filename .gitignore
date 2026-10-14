@@ -1,0 +1,6 @@
+/lib/
+/bin/
+/shard.lock
+/shard.override.yml
+*.dwarf
+.env

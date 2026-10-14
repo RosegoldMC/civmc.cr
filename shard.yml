@@ -1,0 +1,11 @@
+name: rosegold-civmc
+version: 0.1.0
+crystal: ">= 1.19.1"
+license: MIT
+dependencies:
+  rosegold:
+    github: RosegoldMC/rosegold.cr
+    commit: 45a5d733282723d45428f9bc2bc228695e431907
+  rosegold-civ-common:
+    github: RosegoldMC/civ-common.cr
+    version: ~> 0.1.0
