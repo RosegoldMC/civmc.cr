@@ -15,6 +15,11 @@ an internal object or incidental result; inspect permitted observations to
 confirm a workflow. In particular, do not use `chat`'s return value as a delivery
 or server-acceptance acknowledgement.
 
+The [rules snapshot](server-rules/civmc.md) is dated, we did not verify a
+current first-party copy, and no staff approval is implied. Moving
+to this shard does not make a script legal. Go through the
+[bot legality checklist](guide/bot-legality.md) for each script.
+
 ## Calls that need review
 
 | Existing use | Migration |
@@ -24,6 +29,8 @@ or server-acceptance acknowledgement.
 | `Rosegold::Event::ContainerOpened` | Subscribe to `Rosegold::CivMC::ContainerOpened`; its `menu` is restricted. |
 | Core `SpectateServer` setup | Use `start_spectating` and `stop_spectating`; stop in `ensure`. |
 | Gamemode, mining-time inspection, pick-block, direct recipe-registry access | Not exposed. Use the supported action DSL and inventory outcomes. |
+| Mining-time estimates (`estimated_break_ticks`) | Not exposed. Use held `start_digging` with `stop_digging` in `ensure`, or a bounded `dig`, at a configured target. A timeout, durability change, or pickup does not show which block broke. |
+| `attack`, `dig`, and `start_digging` near players | They are the attack button and can hit a reachable entity instead of the intended block. Do not use them in combat. See the checklist. |
 | Custom elevator/XP loops | Consider `elevator` or `raise_level_with`; read their preconditions and result semantics first. |
 
 The supported event list is in [README.md](README.md). An arbitrary core event
@@ -33,6 +40,9 @@ forwarded automatically.
 Do not pass an existing unrestricted bot/client into the CivMC constructor.
 Construct the facade directly. Low-level core scripts need an explicit review;
 changing the namespace alone cannot establish rule compliance.
+
+Semantics here follow the core revision pinned in `shard.yml`, not a newer core.
+Check that revision before relying on timing or mining behavior from newer docs.
 
 From version 0.2.0, `elevator` accepts only the destination and optional
 `timeout_ticks`. Remove `cancellation:` from elevator calls. XP consumption
