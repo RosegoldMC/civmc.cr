@@ -27,14 +27,17 @@ private and out of version control.
 
 ## What scripts can observe
 
-The [rules snapshot](server-rules/civmc.md) permits inventory, selected hotbar
+The [rules snapshot](server-rules/civmc.md) is a dated copy of Discord text, not
+current first-party rules, and it permits inventory, selected hotbar
 slot, own location, health, hunger, potion effects, experience, boss bars,
-server-provided chat, kick reasons, player logins/logouts, and the server tab list.
+server-provided chat, kick reasons, player logins/logouts, and the server tab list. The tab list is a permitted category; the rules do not
+say which entry fields are covered.
 The direct mount exception exposes only its type and location through `riding`.
 Use `tab_list`, `boss_bar_states`, and `disconnect_reason` for those observations.
 
 The facade composes `Rosegold::Bot` and explicitly exposes reviewed operations.
-Inventory and container wrappers do not expose their client or underlying menu.
+Inventory and container wrappers do not expose their client or the unrestricted core menu. They return
+restricted wrappers instead.
 There is no `client`, `world`, block/entity query, raw packet subscription,
 gamemode getter, recipe registry, mining-time inspection, or pick-block helper.
 
@@ -46,7 +49,8 @@ This prevents accidental access through the facade. It is not a sandbox against
 code that deliberately imports the core or reopens classes. Scripts must still
 follow CivMC's rules, including the prohibition on direct combat assistance.
 Human-client mapping and rendering exceptions do not permit environmental data
-to feed bot decisions. No staff approval is implied.
+to feed bot decisions. No staff approval is implied, and rules may have changed
+since the snapshot. Check CivMC's current rules before you run a script.
 
 ## Events
 
@@ -95,3 +99,4 @@ or raw client object. Connect a normal Minecraft client to `localhost:25566`.
 Run `shards install`, `crystal spec`, `python3 spec/compile_boundary.py`, and
 `crystal tool format --check`.
 Read [MIGRATION.md](MIGRATION.md) before moving an existing core bot.
+Coding agents: see [AGENTS.md](AGENTS.md).
